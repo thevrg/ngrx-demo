@@ -1,0 +1,8 @@
+<app-edit-feature *ngIf="!!editedFeature"
+                  [feature]="editedFeature"
+                  [mode]="formMode$ | async"
+                  [saveEnabled]="editedDirty$ | async"
+                  (featureChanges)="onFeatureChange($event)"
+                  (startEdit)="onStartEdit(editedFeature.id)"
+                  (save)="onSave($event)"></app-edit-feature>
+<h3 *ngIf="!editedFeature">Loading Feature...</h3>

@@ -1,4 +1,18 @@
 <h1>
   {{title}}
 </h1>
+<ul>
+  <li routerLink="feature-list" routerLinkActive="active">Feature List</li>
+</ul>
 <router-outlet></router-outlet>
+
+<table border="1">
+  <tr>
+  <th>Action</th>
+  <th>State</th>
+  </tr>
+  <tr *ngFor="let actionStatePair of actionStatePairs">
+    <td><pre>{{actionStatePair[0] | json}}</pre></td>
+    <td><pre>{{actionStatePair[1] | json}}</pre></td>
+  </tr>
+</table>

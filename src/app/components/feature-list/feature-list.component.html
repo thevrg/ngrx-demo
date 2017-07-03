@@ -1,0 +1,4 @@
+<h2>Feature List</h2>
+<ul>
+  <li *ngFor="let feature of featureList" (click)="selectFeature(feature.id)" [class.active]="feature.id === selectedId" class="clickable">{{feature.name}}</li>
+</ul>

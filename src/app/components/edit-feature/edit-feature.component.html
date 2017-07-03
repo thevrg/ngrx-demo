@@ -1,0 +1,11 @@
+<form [formGroup]="form" >
+  <div>Name:</div>
+  <div><input type="text" [readonly]="displayOnly" formControlName="name" placeholder="Name"></div>
+  <div>Description:</div>
+  <div><input type="text" [readonly]="displayOnly" formControlName="description" placeholder="Description"></div>
+  <button *ngIf="mode === FormMode.NEW">Create new Feature</button>
+  <button *ngIf="mode === FormMode.EDIT" (click) = "onSave()" [disabled]="!saveEnabled">Save Changes</button>
+  <button *ngIf="displayOnly"
+          (click)="onStartEdit()" type="button">Edit</button>
+</form>
+
