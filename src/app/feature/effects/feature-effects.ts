@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect, toPayload} from '@ngrx/effects';
-import {FeatureLoaded, FeaturesLoaded, LOAD_FEATURE, LOAD_FEATURES} from '../actions/feature';
+import {FeatureLoaded, FeaturesLoaded, LOAD_ONE, LOAD_ALL} from '../actions/feature';
 import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 
@@ -9,7 +9,7 @@ export class FeatureEffects {
 
   @Effect()
   loadFeaturesEffect$: Observable<Action> = this._actions$
-    .ofType(LOAD_FEATURES)
+    .ofType(LOAD_ALL)
     .delay(1000)
     .map((action) => new FeaturesLoaded([
       {id: 123, name: 'First', description: 'Desc First', enabled: true},
@@ -18,7 +18,7 @@ export class FeatureEffects {
 
   @Effect()
   loadFeatureEffect$ = this._actions$
-    .ofType(LOAD_FEATURE)
+    .ofType(LOAD_ONE)
     .map(toPayload)
     .delay(1000)
     .map((id) => new FeatureLoaded(

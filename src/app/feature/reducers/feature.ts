@@ -34,8 +34,8 @@ export const getFeatureList = (state: State) =>
 export const getEdited = (state: State) => state.edited;
 export const getSelectedFeatureId = (state: State) => state.selectedId;
 export const getDetailsMode = (state: State) => state.detailsMode;
-export const getSelectedFeature = createSelector(getFeatureList, getSelectedFeatureId,
-  (featureList, selectedId) => featureList.find((feature) => feature.id === selectedId));
+export const getSelectedFeature = createSelector(getFeatureById, getSelectedFeatureId,
+  (featureById, selectedId) => featureById[selectedId]);
 
 export const isEditedDirty = (state: State) => {
   if (state.edited && state.edited.id && state.featureStatusById[state.edited.id] === EntityStatus.LOADED) {
@@ -53,7 +53,7 @@ export function reducer(state = initialState, action: featureActions.Any): State
 
   switch (action.type) {
 
-    case featureActions.ADD_FEATURE: {
+    case featureActions.ADD: {
       const feature = action.payload;
       featureIdList = [...featureIdList, feature.id];
       featureById = {...featureById, [feature.id]: feature};
@@ -61,7 +61,7 @@ export function reducer(state = initialState, action: featureActions.Any): State
       changed = true;
       break;
     }
-    case featureActions.FEATURES_LOADED: {
+    case featureActions.ALL_LOADED: {
       const features = action.payload as Feature[];
       featureIdList = features.map(feature => feature.id);
       featureById = {...featureById};
@@ -74,8 +74,8 @@ export function reducer(state = initialState, action: featureActions.Any): State
       changed = true;
       break;
     }
-    case featureActions.FEATURE_LOADED:
-    case featureActions.UPDATE_FEATURE: {
+    case featureActions.ONE_LOADED:
+    case featureActions.UPDATE: {
       const loadedFeature = action.payload as Feature;
       const featureId = loadedFeature.id;
       featureById = {...featureById, [featureId]: loadedFeature};
@@ -85,13 +85,13 @@ export function reducer(state = initialState, action: featureActions.Any): State
       changed = true;
       break;
     }
-    case featureActions.SELECT_FEATURE: {
+    case featureActions.SELECT: {
       const featureId = action.payload as FeatureId;
       selectedId = featureId;
       changed = true;
       break;
     }
-    case featureActions.START_EDIT_FEATURE: {
+    case featureActions.START_EDIT: {
       const featureId = action.payload as FeatureId;
       selectedId = featureId;
       detailsMode = DetailsFormMode.EDIT;
@@ -99,7 +99,7 @@ export function reducer(state = initialState, action: featureActions.Any): State
       changed = true;
       break;
     }
-    case featureActions.UPDATE_EDITED_FEATURE: {
+    case featureActions.UPDATE_EDITED: {
       const feature = action.payload as Feature;
       edited = {...feature};
       changed = true;

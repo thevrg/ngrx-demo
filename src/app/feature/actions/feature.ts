@@ -1,90 +1,90 @@
 import {Action} from '@ngrx/store';
 import {Feature, FeatureId} from '../types/feature';
 
-export const LOAD_FEATURES = 'Load Features';
-export const LOAD_FEATURE = 'Load Feature';
-export const START_EDIT_FEATURE = 'Start Edit Feature';
-export const FEATURES_LOADED = 'Features loaded';
-export const FEATURE_LOADED = 'Feature loaded';
-export const ADD_FEATURE = 'Add Feature';
-export const UPDATE_FEATURE = 'Update Feature';
-export const UPDATE_EDITED_FEATURE = 'Update Edited Feature';
-export const REMOVE_FEATURE = 'Remove Feature';
-export const TOGGLE_FEATURE = 'Toggle Feature';
-export const SELECT_FEATURE = 'Select Feature';
+export const LOAD_ALL = '[Features] Load All';
+export const LOAD_ONE = '[Features] Load One';
+export const START_EDIT = '[Features] Start Edit';
+export const ALL_LOADED = '[Features] All Loaded';
+export const ONE_LOADED = '[Features] One Loaded';
+export const ADD = '[Features] Add One';
+export const UPDATE = '[Features] Update One';
+export const UPDATE_EDITED = '[Features] Update Edited';
+export const REMOVE_ONE = '[Features] Remove One';
+export const TOGGLE_ONE = '[Features] Toggle Feature';
+export const SELECT = '[Features] Select';
 
 export class AddFeature implements Action {
-  readonly type = ADD_FEATURE;
+  readonly type = ADD;
 
   constructor(public payload: Feature) {
   }
 }
 
 export class UpdateFeature implements Action {
-  readonly type = UPDATE_FEATURE;
+  readonly type = UPDATE;
 
   constructor(public payload: Feature) {
   }
 }
 
 export class UpdateEditedFeature implements Action {
-  readonly type = UPDATE_EDITED_FEATURE;
+  readonly type = UPDATE_EDITED;
 
   constructor(public payload: Feature) {
   }
 }
 
 export class RemoveFeature implements Action {
-  readonly type = REMOVE_FEATURE;
+  readonly type = REMOVE_ONE;
 
   constructor(public payload: FeatureId) {
   }
 }
 
 export class ToggleFeature implements Action {
-  readonly type = TOGGLE_FEATURE;
+  readonly type = TOGGLE_ONE;
 
   constructor(public payload: FeatureId) {
   }
 }
 
 export class LoadFeatures implements Action {
-  readonly type = LOAD_FEATURES;
+  readonly type = LOAD_ALL;
 
   constructor() {
   }
 }
 
 export class SelectFeature implements Action {
-  readonly type = SELECT_FEATURE;
+  readonly type = SELECT;
 
   constructor(public payload: FeatureId) {
   }
 }
 
 export class LoadFeature implements Action {
-  readonly type = LOAD_FEATURE;
+  readonly type = LOAD_ONE;
 
   constructor(public payload: FeatureId) {
   }
 }
 
 export class FeaturesLoaded implements Action {
-  readonly type = FEATURES_LOADED;
+  readonly type = ALL_LOADED;
 
   constructor(public payload: Feature[]) {
   }
 }
 
 export class FeatureLoaded implements Action {
-  readonly type = FEATURE_LOADED;
+  readonly type = ONE_LOADED;
 
   constructor(public payload: Feature) {
   }
 }
 
 export class StartEditFeature implements Action {
-  readonly type = START_EDIT_FEATURE;
+  readonly type = START_EDIT;
 
   constructor(public payload: FeatureId) {
   }
