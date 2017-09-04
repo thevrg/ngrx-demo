@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {Feature} from '../../types/feature';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {Observable} from 'rxjs/Observable';
 import {DetailsFormMode} from '../../../../types/common';
 
 @Component({
@@ -23,7 +22,7 @@ export class EditFeatureComponent implements OnChanges {
   FormMode = DetailsFormMode;
 
   @Output()
-  featureChanges: Observable<Feature>;
+  featureChanges = new EventEmitter<Feature>();
 
   @Output()
   save = new EventEmitter<Feature>();
@@ -33,20 +32,34 @@ export class EditFeatureComponent implements OnChanges {
 
   form: FormGroup;
 
+  propagateChanges = true;
+
   get displayOnly() {
     return this.mode === DetailsFormMode.SHOW;
   }
 
   constructor(private formBuilder: FormBuilder) {
     this.form = this.formBuilder.group({id: 1, name: 'x', description: 'ff', enabled: false});
-    this.featureChanges = this.form.valueChanges.distinctUntilChanged();
+    this.form.valueChanges.subscribe(feature => {
+      if (this.propagateChanges) {
+        this.featureChanges.next(feature);
+      }
+    });
   }
+
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.feature) {
       const feature = changes.feature.currentValue || {id: '', name: '', description: '', enabled: false};
-      this.form.patchValue(feature);
+      this.setValueSilently(feature);
     }
+  }
+
+
+  private setValueSilently(feature: any | { id: string; name: string; description: string; enabled: boolean }) {
+    this.propagateChanges = false;
+    this.form.patchValue(feature);
+    this.propagateChanges = true;
   }
 
   onStartEdit() {
