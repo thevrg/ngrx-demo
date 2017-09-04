@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {Feature} from '../../../types/feature';
+import {Feature} from '../../types/feature';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
-import {DetailsFormMode} from '../../../types/common';
+import {DetailsFormMode} from '../../../../types/common';
 
 @Component({
   selector: 'app-edit-feature',

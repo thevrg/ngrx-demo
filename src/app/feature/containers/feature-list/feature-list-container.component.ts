@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
-import * as fromRoot from '../../reducers';
+import * as fromFeature from '../../reducers';
 import {Observable} from 'rxjs/Observable';
-import {Feature, FeatureId} from '../../../types/feature';
-import {LoadFeatures} from '../../../actions/feature';
+import {Feature, FeatureId} from '../../types/feature';
+import {LoadFeatures} from '../../actions/feature';
 import {Router} from '@angular/router';
 
 @Component({
@@ -16,13 +16,12 @@ export class FeatureListContainerComponent implements OnInit {
   featureList$: Observable<Feature[]>;
   selectedId$: Observable<FeatureId>;
 
-  constructor(private _store: Store<fromRoot.State>, private _router: Router) {
+  constructor(private _store: Store<fromFeature.State>, private _router: Router) {
   }
 
   ngOnInit() {
-    this.featureList$ = this._store.select(fromRoot.getFeatureList);
-//    this.selectedId$ = this._store.select((state) => state.feature.selected);
-    this.selectedId$ = this._store.select(fromRoot.getSelectedFeatureId);
+    this.featureList$ = this._store.select(fromFeature.getFeatureList);
+    this.selectedId$ = this._store.select(fromFeature.getSelectedFeatureId);
     this._store.dispatch(new LoadFeatures());
   }
 

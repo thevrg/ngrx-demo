@@ -1,9 +1,8 @@
-import {Feature, FeatureId} from '../../types/feature';
-import * as featureActions from '../../actions/feature';
-import {createSelector} from 'reselect';
+import {createSelector} from '@ngrx/store';
+import {DetailsFormMode, EntityStatus} from '../../../types/common';
+import * as featureActions from '../actions/feature';
+import {Feature, FeatureId} from '../types/feature';
 import * as _ from 'lodash';
-import {DetailsFormMode, EntityStatus} from '../../types/common';
-
 
 export interface State {
   featureIdList: FeatureId[];
@@ -23,14 +22,15 @@ export const initialState: State = {
   edited: null
 };
 
-// Selectors
-
 export const getFeatureIdList = (state: State) => state.featureIdList;
 export const getFeatureById = (state: State) => state.featureById;
 export const getFeatureStatusById = (state: State) => state.featureStatusById;
-export const getFeatureList = (state: State) => state.featureIdList
-  .map(featureId => state.featureById[featureId])
-  .filter(feature => !!feature);
+export const getFeatureList = (state: State) =>
+  state.featureIdList ?
+    state.featureIdList
+      .map(featureId => state.featureById[featureId])
+      .filter(feature => !!feature)
+    : [];
 export const getEdited = (state: State) => state.edited;
 export const getSelectedFeatureId = (state: State) => state.selectedId;
 export const getDetailsMode = (state: State) => state.detailsMode;
@@ -46,7 +46,6 @@ export const isEditedDirty = (state: State) => {
   }
 };
 
-
 export function reducer(state = initialState, action: featureActions.Any): State {
 
   let {featureIdList, featureById, featureStatusById, selectedId, detailsMode, edited} = state;
@@ -54,6 +53,14 @@ export function reducer(state = initialState, action: featureActions.Any): State
 
   switch (action.type) {
 
+    case featureActions.ADD_FEATURE: {
+      const feature = action.payload;
+      featureIdList = [...featureIdList, feature.id];
+      featureById = {...featureById, [feature.id]: feature};
+      featureStatusById = {...featureStatusById, [feature.id]: EntityStatus.LOADED};
+      changed = true;
+      break;
+    }
     case featureActions.FEATURES_LOADED: {
       const features = action.payload as Feature[];
       featureIdList = features.map(feature => feature.id);
@@ -114,4 +121,3 @@ export function reducer(state = initialState, action: featureActions.Any): State
   } : state;
 
 }
-

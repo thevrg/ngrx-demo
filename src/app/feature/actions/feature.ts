@@ -4,7 +4,6 @@ import {Feature, FeatureId} from '../types/feature';
 export const LOAD_FEATURES = 'Load Features';
 export const LOAD_FEATURE = 'Load Feature';
 export const START_EDIT_FEATURE = 'Start Edit Feature';
-export const EDIT_FEATURE = 'Edit Feature';
 export const FEATURES_LOADED = 'Features loaded';
 export const FEATURE_LOADED = 'Feature loaded';
 export const ADD_FEATURE = 'Add Feature';
@@ -91,15 +90,8 @@ export class StartEditFeature implements Action {
   }
 }
 
-export class EditFeature implements Action {
-  readonly type = EDIT_FEATURE;
-
-  constructor(public payload: FeatureId) {
-  }
-}
-
 export type Any = AddFeature | RemoveFeature | UpdateFeature
-  | StartEditFeature | EditFeature
+  | StartEditFeature
   | UpdateEditedFeature
   | ToggleFeature
   | LoadFeatures | FeaturesLoaded

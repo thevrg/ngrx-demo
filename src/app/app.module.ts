@@ -5,23 +5,20 @@ import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import {FeatureModule} from './feature/feature.module';
 import {StoreModule} from '@ngrx/store';
-import {reducers, initialState} from './reducers';
+import {metaReducers, reducers} from './reducers';
+import {environment} from '../environments/environment';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import {EffectsModule} from '@ngrx/effects';
-import { FeatureListContainerComponent } from './containers/feature-list/feature-list-container.component';
-import {FeatureEffects} from './effects/feature-effects';
-import { EditFeatureComponent } from './components/edit-feature/edit-feature.component';
-import {FeatureListComponent} from './components/feature-list/feature-list.component';
-import {EditFeatureContainerComponent} from './containers/edit-feature/edit-feature-container.component';
-import {FeatureFormIsUnsavedGuard} from './navigation-guards/FeatureFormIsUnsavedGuard';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/withLatestFrom';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FeatureListComponent,
-    FeatureListContainerComponent,
-    EditFeatureComponent,
-    EditFeatureContainerComponent
   ],
   imports: [
     BrowserModule,
@@ -29,8 +26,10 @@ import {FeatureFormIsUnsavedGuard} from './navigation-guards/FeatureFormIsUnsave
     ReactiveFormsModule,
     HttpModule,
     AppRoutingModule,
-    StoreModule.provideStore(reducers, initialState),
-    EffectsModule.runAfterBootstrap(FeatureEffects)
+    FeatureModule,
+    StoreModule.forRoot(reducers, {metaReducers}),
+    EffectsModule.forRoot([]),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [],
   bootstrap: [AppComponent]

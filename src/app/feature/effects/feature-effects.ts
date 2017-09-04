@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect, toPayload} from '@ngrx/effects';
-import {FeatureLoaded, FeaturesLoaded, LOAD_FEATURE, LOAD_FEATURES} from '../../actions/feature';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/delay';
+import {FeatureLoaded, FeaturesLoaded, LOAD_FEATURE, LOAD_FEATURES} from '../actions/feature';
+import {Observable} from 'rxjs/Observable';
+import {Action} from '@ngrx/store';
 
 @Injectable()
 export class FeatureEffects {
 
   @Effect()
-  loadFeaturesEffect$ = this._actions$
+  loadFeaturesEffect$: Observable<Action> = this._actions$
     .ofType(LOAD_FEATURES)
     .delay(1000)
     .map((action) => new FeaturesLoaded([

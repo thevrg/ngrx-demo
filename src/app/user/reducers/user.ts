@@ -1,18 +1,17 @@
-import {User, UserId} from '../../types/user';
-import {Action} from '@ngrx/store';
-import {ADD_USER} from '../../actions/user';
+import {User, UserId} from '../../../types/user';
+import {ADD_USER, Any} from '../actions/user';
 
 export interface State {
   userList: User[];
   selected: UserId | null;
 }
 
-export const initialState: State = {
+const initialState: State = {
   userList: [],
   selected: null
 };
 
-export const reducer = (state = initialState, action: Action) => {
+export const reducer = (state = initialState, action: Any) => {
 
   let {userList, selected} = state;
   let changed = false;

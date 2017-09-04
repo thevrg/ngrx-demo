@@ -2,7 +2,7 @@ import {
   ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output,
   SimpleChanges
 } from '@angular/core';
-import {Feature, FeatureId} from '../../../types/feature';
+import {Feature, FeatureId} from '../../types/feature';
 
 @Component({
   selector: 'app-feature-list',
